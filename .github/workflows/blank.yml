@@ -6,9 +6,9 @@ name: AutoProof
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]  
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -19,39 +19,17 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+    container:
+      image: anaumchev/autoproof:0
+      
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-
-#      - name: Cache AP
-#        id: cache-ap
-#        uses: actions/cache@v2
-#        with:
-#          path: /usr/local/Eiffel;
-#          key: ${{ runner.os }}-ap
-
-      - name: Download AutoProof distribution
-#        if: steps.cache-ap.outputs.cache-hit != 'true'
-        run:
-          wget https://www.dropbox.com/s/1kibfwteo0fb96q/autoproof.tar.gz;
-          tar xvf autoproof.tar.gz;
-          sudo mv $GITHUB_WORKSPACE/Eiffel_* /usr/local/Eiffel
-          
-
-      - name: Install z3
-        run:
-          sudo apt-get install -y z3
-
-      - name: Install .NET
-        run:
-          sudo apt-get install -y dotnet-runtime-6.0
-
       - name: Compile
         run:
-          $ISE_EIFFEL/studio/spec/$ISE_PLATFORM/bin/ec_ap -batch -config *.ecf
+          $ISE_EIFFEL/studio/spec/$ISE_PLATFORM/bin/autoproof.sh -batch -config *.ecf
         env:
           ISE_EIFFEL: /usr/local/Eiffel
           ISE_PLATFORM: linux-x86-64     
@@ -62,4 +40,3 @@ jobs:
         env:
           ISE_EIFFEL: /usr/local/Eiffel
           ISE_PLATFORM: linux-x86-64
-
