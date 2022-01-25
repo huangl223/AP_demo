@@ -11,6 +11,10 @@
 		<option warning="warning" is_obsolete_iteration="true">
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
+		<library name="base" location="${ISE_EIFFEL}/studio/tools/autoproof/library/base/base-safe-scoop.ecf">
+			<option warning="none">
+			</option>
+		</library>
 		<setting name="console_application" value="true"/>
 		<setting name="total_order_on_reals" value="false"/>
 		<cluster name="clock" location=".\" recursive="true"/>
