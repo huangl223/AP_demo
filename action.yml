@@ -1,0 +1,2 @@
+- name: AutoProof
+  uses: anaumchev/autoproof@v1.0.1
